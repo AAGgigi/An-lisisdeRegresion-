@@ -20,3 +20,10 @@ attach(base1.1)
 table (edad)
 detach(base1.1)
 summary(base1.1$edad)
+#### IMPORTAR BASE DE DATOS#####
+####PARA IMPORTAR BASE DE DATOS SE UTILIZA EL PAQUETE FOREIGN####
+install.packages("foreign")
+require  (foreign)
+sociodem <- read.dbf ("C://Users//SALA-C28.RTIC-C28-HP//Documents//REGRESION//SDEMT215.dbf")
+table (sociodem $SEX)
+
