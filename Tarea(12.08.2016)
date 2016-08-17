@@ -1,0 +1,24 @@
+setwd("C://Users//usuario//Desktop") ##definir el directorio raiz de la base
+require(foreign)
+SDEMT215 <- data.frame(read.dbf("SDEMT215.dbf"))
+install.packages("questionr")
+require(questionr)
+#TAREA
+SDEMT215$CS_AD_DES<-factor(SDEMT215$CS_AD_DES,levels=c(01,02,03,09),labels= c("MISMO ESTADO","OTRO ESTADO","OTRO PAIS","NO SABE"))
+wtd.table(SDEMT215$CS_AD_DES)#A QUE ESTADO DE LA REPUBLICA SE FUE 
+
+SDEMT215$MOTIVO<- factor(SDEMT215$ CS_NR_MOT,levels = c(01,02,03,04,05,06,07,08,09,10,99), labels = c("Trabajo","Estudios","Se caso","Se separo","P. Salud","R.Familiar","I.Publica","Nacio","Fue omitido","Otro motivo","No sabe"))
+wtd.table(SDEMT215$ CS_NR_MOT)# MUESTRA DATOS
+wtd.table(SDEMT215$MOTIVO)#ETIQUETA 
+
+SDEMT215$E_CON<-factor(SDEMT215$E_CON,levels=c(1,2,3,4,5,6,9),labels= c("UNION LIBRE","SEPARADO","DIVORCIADO","VIUDO", "CASADO", "SOLTERO","NO SABE"))
+wtd.table(SDEMT215$E_CON)#ESTADO CONYUGAL
+
+SDEMT215$CS_AD_MOT<-factor(SDEMT215$CS_AD_MOT,levels=c(1,2,3,9),labels= c("MISMO ESTADO","OTRO ESTADO","OTRO PAIS","NO SABE"))
+wtd.table(SDEMT215$CS_AD_MOT)#MOTIVOS DE LA AUSENCIA
+
+SDEMT215$CS_NR_ORI<- factor(SDEMT215$ CS_NR_ORI,levels = c(1,2,3,9), labels = c("Mismo estado","Otro estado","Otro pais","No sabe"))
+wtd.table(SDEMT215$ CS_NR_ORI)#DE DONDE VINO
+
+SDEMT215$CS_NR_MOT<- factor(SDEMT215$ CS_NR_MOT,levels = c(01,02,03,04,05,06,07,08,09,10,99), labels = c("Trabajo","Estudios","Se caso","Se separo","P. Salud","R.Familiar","I.Publica","Nacio","Fue omitido","Otro motivo","No sabe"))
+wtd.table(SDEMT215$ CS_NR_MOT)# MOTIVO PRINCIPAL POR EL QUE LLEGO
