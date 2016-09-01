@@ -1,0 +1,28 @@
+####****PRACTICA 5
+
+
+######queremos comprobarm que la hipotesis que entre mayor ingreso de la 
+##familia hay una mayor estatura en los niños
+esta<-c(1.2,1.23,1.19,1.32,1.28,1.22,1.17,1.29,1.33,1.15)
+eco<-c(110,130,108,167,156,115,104,138,170,107)
+#1.gráfica de dispersión
+plot(eco,esta,pch=07,xlab="Ingreso económico",ylab="Estatura",main="Gráfica de dispersión",col="green")
+#2.cor()-----calcula el coeficiente de correlación
+help(cor)
+#2.cor()-----calcula el coeficiente de correlación(v.d,v.i, método)
+help(cor)
+cor(esta,eco,method="pearson")####=.9556 es decir hay una akta relación
+
+#3.Prueba de hipótesis----cor.test(v.d,v.i,método)
+cor.test(esta,eco,method="pearson") ### SI P-VALUE ES MENOR A .05 SE REXHAZA H0 (HIPOTESIS NULA) PERO SI HAY RELACION 
+## YA QUE SE CONFIRMA LA CORRELACIÓN SE APLICA EL MODELO 
+# PARA APLICAR EL MODELO SE UTILIZA LA FUNCION lm()
+mod1<- lm(esta~eco) ## lm 1° la variable dependiente y luego simbolo de aproximacion y var indep (modelo lineal simple)
+summary (mod1) ## resumen del modelo se llama el modelo y da los residuales min
+##cuartil, mediana, tercercuartil, ,ax, tambuen t daa los coeficientes,son sifnificstivos o no, desviacion estandar y probabilidad de que sean significTICOS
+##ERROR STANDAR , r^2
+abline(mod1)## graficar la recta delm mod1 en la grafica de dispersion de las variables en estudio
+names(mod1)
+mod1$coefficients
+###con esto podriamos decir que tenemos una ecuacion
+esta=.9323 +.0023*eco
