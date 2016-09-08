@@ -1,0 +1,59 @@
+#####queremos comprobarm que la hipotesis que entre mayor ingreso de la  
+ ##familia hay una mayor estatura en los niños 
+ esta<-c(1.2,1.23,1.19,1.32,1.28,1.22,1.17,1.29,1.33,1.15) 
+ eco<-c(110,130,108,167,156,115,104,138,170,107) 
+ #1.gráfica de dispersión 
+ plot(eco,esta,pch=07,xlab="Ingreso económico",ylab="Estatura",main="Gráfica de dispersión",col="green") 
+ #2.cor()-----calcula el coeficiente de correlación 
+ help(cor) 
+ #2.cor()-----calcula el coeficiente de correlación(v.d,v.i, método) 
+ help(cor) 
+ cor(esta,eco,method="pearson")####=.9556 es decir hay una akta relación 
+ #3.Prueba de hipótesis----cor.test(v.d,v.i,método) 
+ cor.test(esta,eco,method="pearson") ### SI P-VALUE ES MENOR A .05 SE REXHAZA H0 (HIPOTESIS NULA) PERO SI HAY RELACION  
+ ## YA QUE SE CONFIRMA LA CORRELACIÓN SE APLICA EL MODELO  
+ # PARA APLICAR EL MODELO SE UTILIZA LA FUNCION lm() 
+ mod1<- lm(esta~eco) ## lm 1° la variable dependiente y luego simbolo de aproximacion y var indep (modelo lineal simple) 
+ summary (mod1) ## resumen del modelo se llama el modelo y da los residuales min 
+ ##cuartil, mediana, tercercuartil, ,ax, tambuen t daa los coeficientes,son sifnificstivos o no, desviacion estandar y probabilidad de que sean significTICOS 
+ ##ERROR STANDAR , r^2 
+ abline(mod1)## graficar la recta delm mod1 en la grafica de dispersion de las variables en estudio 
+ names(mod1) 
+ mod1$coefficients 
+ ###con esto podriamos decir que tenemos una ecuacion 
+ esta=.9323 +.0023*eco 
+######################################## PRACTICA 6 ################
+ summary(mod1)$coeficients
+ # se tiene un ajuste
+ esta = .9323 +.0023*eco 
+ #### los valores de p value son inferiores a .05 por lo que 
+ # !) la relacion lineal entre la var dependiente y la independiente 
+# relacion positiva
+ # por cada peso de ingreso que aumenta em padre o la  madre aumenta la estatura en .0023
+ ## el error estandar residual es .0198 este valor es muy importamte debido 
+ #a que permite medir la calidad del modelo 
+ #con este error generamos los intervalos de confianza
+ #los IC nos permiten complementar la información sobre las estimaciones
+ #para calcular el IC se utiliza
+ confint(mod1,level=.95)
+ #interpretacion  con una probanilidad de 95% b0 se  encuentra en el intervalo (.0017,.0029)
+ ### BONDAD DE AJUSTE#####
+ # con la bondad de ajuste verificmos la calidad del modelo al interpretar la variable dependiente para eso se utiliza la 
+ # tabla anova
+ anova(mod1)
+ # en este caso la variabilidad eplicada del modelo es .033022=ssm 
+ # se revisa la SSR=.0031
+ # revisando los valores del summary el estadistico 
+ # F es mayor a 1 y p-value< .05
+ # con estas revisiones se puede mencionar que se rechaza la hipotesis nula de F=1
+ # y se puede establecer un modelo 
+ 
+ summary(mod1)
+ #Revisar R2 multiple
+ #alrededor del 91% de la variabilidad de la estatura
+ #es explicar por la recta ajustada
+ ######### supuestos######
+ base1<- data.frame(eco,esta)
+ base1$fitted.mod<- fitted(mod1)
+ base1$residuals.mod1<- residuals(mod1)
+ base1$rstudent.mod<- rstudent(mod1)
