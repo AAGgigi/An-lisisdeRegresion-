@@ -1,0 +1,32 @@
+corredor<- c( "wall st", "etrade1", "etrade2", "pre trade", "track", "water house", "brown", "br america", 
+              "merrill lynch","strong funds")
+operacion <- c(3.7, 3.4, 2.5, 4.8, 4, 3, 2.7, 1.7, 2.2, 1.4)
+uso <- c(4.5, 3, 4, 3.7, 3.5, 3, 2.5, 3.5, 2.7, 3.6)
+gama <- c(4.8, 4.2, 4, 3.4, 3.2, 4.6, 3.3, 3.1, 3, 2.5)
+estrellas <- c(4, 3.5, 3.5, 3.5, 3.5, 3.5, 3, 3, 2.5, 2)
+
+bolsa<-data.frame(estrellas ,operacion,uso, gama)
+
+mbolsa<- lm(estrellas~operacion+uso+gama,data=bolsa)
+summary(mbolsa)
+######prediccion#######
+inter<-seq(min(bolsa$uso),max(bolsa$uso),length(bolsa$uso))###rango para la variable uso 
+inter
+bolpred<-data.frame(gama=2,operacion=2,uso=inter)
+predi1<- predict(mbolsa,bolpred,interval="prediction",se.fit=TRUE,data=bolsa)
+head(predi1$fit)
+### detectar multicolinalidad en el modelo
+## cuando un modelo tiene multicolinalidas en un mrm es cuando una var indep es una combinación 
+### lineal de otra variable indep.. es decir la multicolinaildas existe enun mrm 
+## si hay fuerte correlacion entre 2 o mas var indep esto es cuando tengamos un coef de 
+##correlacion 1 
+##para detectar esta colinealidad se estima el factor de inflacion de la varianza (VIF)
+###este factor se calcula con R a traves de la funcion vif()
+##para este calculo se recomiendan estos rangos
+###FIV estado de los predictores
+###FIV=! no correlacionados
+##1<FIV<5 moderadamente correlacionados
+##FIV>5 a 10 aleatoriamente correlacionados
+install.packages("car")
+require(car)
+vif(mbolsa)
