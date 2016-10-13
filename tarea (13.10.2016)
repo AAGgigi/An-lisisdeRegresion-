@@ -1,0 +1,11 @@
+###tarea... en equipo
+####con la base de la SDE de la ENOE 2016 2do trimestre
+#### aplicarun modelo con las siguientes variables
+## dependiente =INGOCUP
+##indep EDAD;SEXO,HRSOCUP,AÑOS,ESCOLARIDAD
+########
+#######
+###Restricciones de la póblacion 
+###poblacion ciudad dependienre del equipo(zacatecas)
+#####sean de 15 a 65 años que el ingreso sea entre 1 y 30000, asalariados o subordinados 
+### en la base que hagan el modelo sin na
