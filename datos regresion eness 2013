@@ -1,0 +1,64 @@
+###### base de datos de eness 2013 #############
+###CUANTOS RECIBEN PENSION SIN HABER COTIZADO EN EL IMSS?
+
+install.packages("foreign")
+require(foreign)
+install.packages("questionr")
+require(questionr)
+
+setwd("C://Users//amd raedon//Desktop")
+
+enessh<-data.frame(read.dbf("eness2013_hogares.dbf"))
+enessp<-data.frame(read.dbf("eness2013_cb_enoe_sdem.dbf"))
+#Pegado de bases
+folio<-paste(enessh$CD_A,enessh$ENT,enessh$CON,
+             enessh$V_SEL,enessh$N_HOG,enessh$H_MUD,enessh$N_REN)
+x<-data.frame(enessh,folio)
+
+folio<-paste(enessp$CD_A,enessp$ENT,enessp$CON,enessp$V_SEL,enessp$N_HOG,enessp$H_MUD,enessp$N_REN)
+x1<-data.frame(enessp,folio)
+
+eness<-merge(x,x1,by = "folio",all.x = T,all.y = T)
+
+#Seleccionando no cotizaron imss
+
+imss<-subset(eness,as.numeric(as.character(eness$P10_1))==1)
+wtd.table(imss$SEX,weights = imss$FAC)
+
+
+##Población Objetivo:
+#### reciben pension
+eness2013<-subset(imss,imss$P10_1==1 & imss$P13_1==1)
+wtd.table (eness2013$P10_1,weights=eness2013$FAC)
+wtd.table (eness2013$P13_1,weights=eness2013$FAC)
+wtd.table (eness2013$SEX,weights=eness2013$FAC)
+
+## 1)Grupos de edad
+eness2013$EDA<-as.character(eness2013$EDA)
+class(eness2013$EDA)
+eness2013$EDA1[as.numeric(eness2013$EDA) >= 18 & as.numeric(eness2013$EDA)<= 19] <- 1
+eness2013$EDA1[as.numeric(eness2013$EDA) >= 20 & as.numeric(eness2013$EDA)<= 29] <- 2
+eness2013$EDA1[as.numeric(eness2013$EDA) >= 30 & as.numeric(eness2013$EDA)<= 39] <- 3
+eness2013$EDA1[as.numeric(eness2013$EDA) >= 40 & as.numeric(eness2013$EDA)<= 49] <- 4
+eness2013$EDA1[as.numeric(eness2013$EDA) >= 50] <- 5
+table (eness2013$EDA1,eness2013$EDA)
+
+## 2)Sexo
+table (eness2013$SEX)
+View(eness2013$EDA1)
+
+## 3)Nivel Educativo
+class(eness2013$ NIV_INS)
+eness2013$NIV_INS<-as.integer(eness2013$NIV_INS)
+eness2013$NIV_INS[as.numeric(eness2013$NIV_INS) == 1] <- 1
+eness2013$NIV_INS[as.numeric(eness2013$NIV_INS) == 2] <- 2
+eness2013$NIV_INS[as.numeric(eness2013$NIV_INS) >= 3 & as.numeric(eness2013$NIV_INS)<= 4] <- 3
+table (eness2013$NIV_INS,eness2013$NIV_INS)
+## 4)Condición de Actividad 
+class(eness2013$POS_OCU)
+eness2013$POS_OCU<-as.character(eness2013$POS_OCU)
+eness2013$POS_OCU[as.numeric(eness2013$POS_OCU) == 1] <- 1
+eness2013$POS_OCU[as.numeric(eness2013$POS_OCU) == 2] <- 2
+eness2013$POS_OCU[as.numeric(eness2013$POS_OCU) >= 3 & as.numeric(eness2013$POS_OCU)<= 4] <- 3
+table (eness2013$POS_OCU,eness2013$POS_OCU)
+
